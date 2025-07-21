@@ -1,0 +1,7 @@
+{
+  "name": "training-log-poc",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
