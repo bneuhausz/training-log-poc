@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { Supabase } from "../supabase/supabase";
 import { AuthError, Session, User } from "@supabase/supabase-js";
 import { toObservable } from "@angular/core/rxjs-interop";
@@ -27,16 +27,16 @@ export class Auth {
     error: null
   });
 
-  readonly state = this.#state.asReadonly();
+  readonly user = computed(() => this.#state().user);
+  readonly isAuthenticated = computed(() => !!this.#state().session);
 
-  readonly firstLoad$ = toObservable(this.state).pipe(
+  readonly firstLoad$ = toObservable(this.#state).pipe(
     filter(state => !state.isLoading),
     take(1)
   );
 
   constructor() {
     this.supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth State Change Event:', event, session);
       this.#state.update(state => ({
         ...state,
         session,
@@ -63,8 +63,7 @@ export class Auth {
 
   async signIn(email: string, password: string) {
     this.setLoading(true);
-    const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
-    console.log('Sign In Data:', data);
+    const { error } = await this.supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       this.setError(error);

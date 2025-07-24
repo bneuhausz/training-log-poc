@@ -1,22 +1,12 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonInput, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
 import { Auth } from "src/app/shared/auth/auth";
 
 @Component({
   selector: 'app-sign-up',
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton,
-    ReactiveFormsModule, IonItem, IonLabel, IonInput, IonButtons,
-    IonBackButton],
+  imports: [IonContent, IonButton, ReactiveFormsModule, IonItem, IonLabel, IonInput],
   template: `
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/" />
-        </ion-buttons>
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content class="ion-padding">
       <form [formGroup]="fg" (ngSubmit)="auth.signUp(fg.value.email!, fg.value.password!)">
         <ion-item>
@@ -32,7 +22,6 @@ import { Auth } from "src/app/shared/auth/auth";
           <ion-input type="password" formControlName="confirmPassword"></ion-input>
         </ion-item>
         <ion-button
-          color="dark"
           expand="full"
           type="submit"
           [disabled]="!fg.valid"

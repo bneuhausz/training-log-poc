@@ -1,23 +1,22 @@
 import { Routes } from '@angular/router';
 import { signInGuard } from './shared/auth/sign-in-guard';
+import { authRoutes } from './auth/auth.routes';
 
 export const routes: Routes = [
   {
     path: '',
+    title: 'Home',
     loadComponent: () => import('./home/home'),
     canActivate: [signInGuard()],
   },
   {
-    path: 'sign-in',
-    loadComponent: () => import('./auth/sign-in/sign-in'),
-  },
-  {
-    path: 'sign-up',
-    loadComponent: () => import('./auth/sign-up/sign-up'),
+    path: '',
+    children: [
+      ...authRoutes,
+    ],
   },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full',
   }
 ];

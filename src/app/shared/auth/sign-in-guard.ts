@@ -9,8 +9,8 @@ export const signInGuard = (): CanActivateFn => {
     const router = inject(Router);
 
     return auth.firstLoad$.pipe(
-      map(state => {
-        if (state.session) {
+      map(_ => {
+        if (auth.isAuthenticated()) {
           return true;
         }
         return router.parseUrl('sign-in');

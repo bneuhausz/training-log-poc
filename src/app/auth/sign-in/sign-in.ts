@@ -1,20 +1,14 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from "@angular/router";
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonItem, IonLabel, IonInput } from '@ionic/angular/standalone';
 import { Auth } from "src/app/shared/auth/auth";
 
 @Component({
   selector: 'app-sign-in',
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton,
-    ReactiveFormsModule, IonItem, IonLabel, IonInput, RouterLink
+  imports: [IonContent, IonButton, ReactiveFormsModule, IonItem, IonLabel, IonInput, RouterLink
   ],
   template: `
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content class="ion-padding">
       <form [formGroup]="fg" (ngSubmit)="auth.signIn(fg.value.email!, fg.value.password!)">
         <ion-item>

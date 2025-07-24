@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonContent } from '@ionic/angular/standalone';
+import { Header } from "./shared/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonApp, IonRouterOutlet, Header, IonContent],
   template: `
     <ion-app>
-      <ion-router-outlet />
+      <app-header />
+      <ion-content class="ion-padding">
+        <ion-router-outlet />
+      </ion-content>
     </ion-app>
   `,
 })
