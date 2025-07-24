@@ -13,10 +13,11 @@ export class ActivePage {
 
   readonly #title = signal<string>('');
   readonly title = this.#title.asReadonly();
-  readonly isHome = signal<boolean>(this.router.url === '/');
+
+  readonly #showBackButton = signal<boolean>(this.canNavigateBack());
+  readonly showBackButton = this.#showBackButton.asReadonly();
 
   constructor() {
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => {
@@ -28,10 +29,18 @@ export class ActivePage {
       }),
       filter(route => route.outlet === 'primary'),
       map(route => route.snapshot.title)
-    ).subscribe((title: string | undefined) => {
-      this.#title.set(title ?? '');
-      this.isHome.set(this.router.url === '/');
-      this.browserTitleService.setTitle(title ?? '');
+    ).subscribe((title) => {
+      this.handleNavigationEnd(title);
     });
+  }
+
+  private handleNavigationEnd(title: string | undefined) {
+    this.#title.set(title ?? '');
+    this.#showBackButton.set(this.canNavigateBack());
+    this.browserTitleService.setTitle(title ?? '');
+  }
+
+  private canNavigateBack() {
+    return this.router.url !== '/' && this.router.url !== '/sign-in';
   }
 }

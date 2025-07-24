@@ -49,9 +49,8 @@ export class Auth {
 
   async signUp(email: string, password: string) {
     this.setLoading(true);
-    const { data, error } = await this.supabase.auth.signUp({ email, password });
+    const { error } = await this.supabase.auth.signUp({ email, password });
     this.setLoading(false);
-    console.log('Sign Up Data:', data);
 
     if (error) {
       this.setError(error);

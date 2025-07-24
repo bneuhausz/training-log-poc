@@ -9,7 +9,7 @@ import { ActivePage } from "./active-page";
   template: `
     <ion-header>
       <ion-toolbar color="primary">
-        @if (!activePage.isHome()) {
+        @if (activePage.showBackButton()) {
           <ion-buttons slot="start">
             <ion-back-button defaultHref="/" />
           </ion-buttons>
